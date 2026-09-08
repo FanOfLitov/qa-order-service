@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: order-service
+
+  datasource:
+    url: jdbc:postresql://localhost:5432/ordersdb
+    username: orders_user
+    password: orders_pass
+
+  jpa:
+    hibernate:
+      ddl-auto:update
+    show-sql: true
+    properties:
+      hiberbate:
+        format_sql:true
