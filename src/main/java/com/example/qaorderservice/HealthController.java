@@ -13,7 +13,7 @@ public class HealthController{
     public Map<String, Object> checkHealth(){
         return Map.of(
                 "status", "UP",
-                "service", "order-service"
+                "service", "order-service",
                 "timestamp", LocalDateTime.now().toString()
         );
     }
