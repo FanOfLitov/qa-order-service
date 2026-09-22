@@ -5,6 +5,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 
 @Entity
 @Table(name="orders")
@@ -15,6 +17,8 @@ public class Order{
     private String customerName;
     private String product;
     private Integer quantity;
+    @Enumerated(EnumType.STRING)
+    private OrderStatus status;
 
     public Order(){
 
@@ -24,6 +28,7 @@ public class Order{
         this.customerName = customerName;
         this.product = product;
         this.quantity = quantity;
+        this.status = OrderStatus.NEW;
     }
 
     public Long getId(){
@@ -45,7 +50,17 @@ public class Order{
         this.product = product;
     }
 
+    public Integer getQuantity() {return quantity;}
     public void setQuantity(Integer quantity){
         this.quantity=quantity;
     }
+
+    public OrderStatus getStatus(){
+        return status;
+    }
+    public void setStatus(OrderStatus status){
+        this.status = status;
+    }
+
+
 }
