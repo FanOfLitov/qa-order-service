@@ -3,11 +3,8 @@ package com.example.qaorderservice.order;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
 
 import java.util.List;
 
@@ -36,4 +33,26 @@ public class OrderController {
     public List<Order> findAll() {
         return orderService.findAll();
     }
+
+    @GetMapping("/{id}")
+    public Order findById(@PathVariable Long id){
+        return orderService.findById(id);
+    }
+
+    @PatchMapping("/{id}/status")
+    public Order updateStatus(
+            @PathVariable Long id,
+            @Valid @RequestBody UpdateOrderStatusRequest request
+    ){
+        return orderService.updateStatus(id, request.getStatus());
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id){
+        orderService.delete(id);
+
+        return ResponseEntity.noContent().build();
+    }
+
+
 }

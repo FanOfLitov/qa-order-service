@@ -1,12 +1,6 @@
 package com.example.qaorderservice.order;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name="orders")
@@ -18,7 +12,8 @@ public class Order{
     private String product;
     private Integer quantity;
     @Enumerated(EnumType.STRING)
-    private OrderStatus status;
+    @Column(nullable = false)
+    private OrderStatus status = OrderStatus.NEW;
 
     public Order(){
 
