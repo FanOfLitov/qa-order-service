@@ -3,6 +3,7 @@ package com.example.qaorderservice.order;
 import org.springframework.stereotype.Service;
 import com.example.qaorderservice.kafka.OrderEventProducer;
 import java.util.List;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class OrderService {
@@ -18,6 +19,8 @@ public class OrderService {
         this.orderEventProducer = orderEventProducer;
     }
 
+
+    @Transactional
     public Order create(CreateOrderRequest request) {
         Order order = new Order(
                 request.getCustomerName(),
@@ -40,23 +43,34 @@ public class OrderService {
         return orderRepository.findById(id).orElseThrow(()-> new OrderNotFoundException(id));
     }
 
-    public Order updateStatus(Long id, OrderStatus newStatus){
+    @Transactional
+    public Order updateStatus(Long id, OrderStatus newStatus) {
         Order order = findById(id);
 
-        OrderStatus currentStatus  = order.getStatus();
+        OrderStatus currentStatus = order.getStatus();
 
-        if(currentStatus == newStatus){
+        if (currentStatus == newStatus) {
             return order;
         }
-        if (!isTransitionAllowed(currentStatus, newStatus)){
+
+        if (!isTransitionAllowed(currentStatus, newStatus)) {
             throw new InvalidOrderStatusTransitionException(
                     currentStatus,
                     newStatus
             );
         }
+
         order.setStatus(newStatus);
 
-        return orderRepository.save(order);
+        Order savedOrder = orderRepository.save(order);
+
+        orderEventProducer.publishOrderStatusChanged(
+                savedOrder,
+                currentStatus,
+                newStatus
+        );
+
+        return savedOrder;
     }
 
 
