@@ -4,7 +4,8 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 
-public class CreateOrderRequest{
+public class CreateOrderRequest {
+
     @NotBlank
     private String customerName;
 
@@ -15,7 +16,12 @@ public class CreateOrderRequest{
     @Positive
     private Integer quantity;
 
-    public CreateOrderRequest(){}
+    public CreateOrderRequest() {
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
 
     public void setCustomerName(String customerName) {
         this.customerName = customerName;
