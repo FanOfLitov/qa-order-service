@@ -2,8 +2,10 @@ package com.example.qaorderservice.order;
 
 import org.springframework.stereotype.Service;
 import com.example.qaorderservice.kafka.OrderEventProducer;
+
 import java.util.List;
 import org.springframework.transaction.annotation.Transactional;
+import com.example.qaorderservice.kafka.OrderEventProducer;
 
 @Service
 public class OrderService {

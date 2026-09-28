@@ -21,6 +21,8 @@ services:
     image: apache/kafka:4.3.1
     container_name: orders-kafka
     restart: unless-stopped
+    environment:
+      KAFKA_HEAP_OPTS: "-Xms128m -Xmx384m"
     ports:
       - "9092:9092"
 

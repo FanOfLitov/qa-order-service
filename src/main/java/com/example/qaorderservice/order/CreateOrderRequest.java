@@ -17,22 +17,23 @@ public class CreateOrderRequest{
 
     public CreateOrderRequest(){}
 
-    public String getCustomerName(){
-        return customerName;
-
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
     }
 
-    public String getProduct(){
+    public String getProduct() {
         return product;
     }
-    public void setProduct(String product){
+
+    public void setProduct(String product) {
         this.product = product;
     }
 
-    public Integer getQuantity(){
+    public Integer getQuantity() {
         return quantity;
     }
-    public void setQuantity(Integer quantity){
+
+    public void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }
 }

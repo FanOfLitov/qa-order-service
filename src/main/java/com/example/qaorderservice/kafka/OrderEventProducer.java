@@ -1,12 +1,12 @@
 package com.example.qaorderservice.kafka;
 
 import com.example.qaorderservice.order.Order;
+import com.example.qaorderservice.order.OrderStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.SendResult;
 import org.springframework.stereotype.Component;
-import com.example.qaorderservice.order.OrderStatus;
 
 import java.time.Instant;
 
@@ -26,14 +26,15 @@ public class OrderEventProducer {
 
     public void publishOrderCreated(Order order) {
 
-        OrderCreatedEvent event = new OrderCreatedEvent(
-                order.getId(),
-                order.getCustomerName(),
-                order.getProduct(),
-                order.getQuantity(),
-                order.getStatus(),
-                Instant.now()
-        );
+        OrderCreatedEvent event =
+                new OrderCreatedEvent(
+                        order.getId(),
+                        order.getCustomerName(),
+                        order.getProduct(),
+                        order.getQuantity(),
+                        order.getStatus(),
+                        Instant.now()
+                );
 
         try {
             SendResult<String, Object> result =
@@ -104,6 +105,4 @@ public class OrderEventProducer {
             throw exception;
         }
     }
-
-
 }
