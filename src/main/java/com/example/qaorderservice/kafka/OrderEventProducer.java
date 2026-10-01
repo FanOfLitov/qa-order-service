@@ -9,6 +9,7 @@ import org.springframework.kafka.support.SendResult;
 import org.springframework.stereotype.Component;
 
 import java.time.Instant;
+import java.util.UUID;
 
 @Component
 public class OrderEventProducer {
@@ -28,6 +29,7 @@ public class OrderEventProducer {
 
         OrderCreatedEvent event =
                 new OrderCreatedEvent(
+                        UUID.randomUUID(),
                         order.getId(),
                         order.getCustomerName(),
                         order.getProduct(),
@@ -45,7 +47,8 @@ public class OrderEventProducer {
                     ).join();
 
             log.info(
-                    "OrderCreatedEvent published: orderId={}, partition={}, offset={}",
+                    "OrderCreatedEvent published: eventId={}, orderId={}, partition={}, offset={}",
+                    event.eventId(),
                     order.getId(),
                     result.getRecordMetadata().partition(),
                     result.getRecordMetadata().offset()
@@ -71,6 +74,7 @@ public class OrderEventProducer {
 
         OrderStatusChangedEvent event =
                 new OrderStatusChangedEvent(
+                        UUID.randomUUID(),
                         order.getId(),
                         oldStatus,
                         newStatus,
@@ -86,7 +90,8 @@ public class OrderEventProducer {
                     ).join();
 
             log.info(
-                    "OrderStatusChangedEvent published: orderId={}, oldStatus={}, newStatus={}, partition={}, offset={}",
+                    "OrderStatusChangedEvent published: eventId={}, orderId={}, oldStatus={}, newStatus={}, partition={}, offset={}",
+                    event.eventId(),
                     order.getId(),
                     oldStatus,
                     newStatus,
